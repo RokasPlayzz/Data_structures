@@ -109,7 +109,7 @@ let N = 3;
 let nthLargest = findNthLargest(unsortedArray, N);
 console.log(`The ${N}-th largest element is:`, nthLargest);
 */
-
+/*
 function findNthLargestSorting(arr, N){
     const n = arr.length;
 
@@ -129,5 +129,54 @@ let N = 3;
 let nthLargestSorting = findNthLargestSorting(unsortedArray, N);
 console.log(`The ${N}-th largest element is:`, nthLargestSorting);
 
+*/
+class Node {
+    constructor(symbol, frequency){
+        this.symbol = symbol;
+        this.frequency = frequency;
+        this.left = null;
+        this.right = null;
+    }
+}
 
-// just checking that the update on these files are going to work
+class PriorityQueue{
+    constructor(){
+        this.nodes = [];
+    }
+
+    enqueue(node){
+        this.nodes.push(node);
+        this.nodes.sort((a, b) => a.frequency - b.frequency);
+    }
+
+    dequeue(){
+        return this.nodes.shift();
+}
+isEmpty(){
+    return this.nodes.length === 0;
+    }
+}
+
+function buildHuffmanTree(data){
+    const frequencyMap = new Map();
+    for (const symbol of data){
+        PriorityQueue.enqueue(new Node(symbol, frequency));
+    }
+
+    while (PriorityQueue.nodes.length > 1){
+        const left = PriorityQueue.dequeue();
+        const right = PriorityQueue.dequeue();
+
+        const mergedNode = new Node(null, left.frequency + right.frequency);
+        mergedNode.left = left;
+        mergedNode.right = right;
+
+        PriorityQueue.enqueue(mergedNode)
+    }
+
+    return PriorityQueue.dequeue();
+}
+
+const inputSequence = "abracadabra";
+const huffmanTree = buildHuffmanTree(inputSequence);
+console.log(huffmanTree);
